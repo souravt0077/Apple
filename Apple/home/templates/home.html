@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+{% include 'nav.html' %}
+<style>
+    #applehome{
+        min-height:100vh;
+        display:grid;
+        align-content:center;
+    }
+    #img{
+        mix-blend-mode: multiply;
+    }
+    
+</style>
+<!--message-->
+<div class='container mt-3'>
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>        
+        {% endfor %}
+    {% endif %}
+</div>
+  <!-- sign out Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">sign out ?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4>Are you sure ?</h4>
+          <p>{{request.user.username}} Do you want to sign out ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No stay here</button>
+          <a type="button" class="btn btn-danger" href={% url 'logout' %}>Sign out anyway </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--modal end-->
+
+  
+<section id='applehome'>
+    <div class='text-center'  >
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft " >
+                <img src={% static 'images/apple.png' %}  />
+            <h6 > <mark class='p-2 rounded'>All brand new I phones</mark> </h6>
+        </div>
+    </div>
+</section>
+{% include 'nav2.html' %}
+
+<section id='applehome'>
+    <div class='text-center ' >
+        <img src={% static 'images/phones.jpg' %} class='d-block w-100' id='img' />
+        <img src={% static 'images/phones2.jpg' %} class='d-block w-100' id='img'  />
+    </div>
+</section>
+<section id='applehome'>
+    <div class='text-center'>
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight">
+            <h1 >Some random text here....</h1>
+
+        </div>
+    </div>
+</section>
+
+<section >
+    <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop ">
+        <img src={% static 'images/iphone143.jpeg' %} class='d-block w-100' id='img' />
+    </div>
+
+</section>
+<section id='center'>
+    <div class='text-center'>
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop m-5">
+            <img src={% static 'images/14png.png' %} class='d-block w-100' id='img'/>
+        </div>
+    </div>
+</section>
+<!--custom.js-->
+<script src={% static 'js/custom_gsap.js' %}></script>
+{% include 'footer.html' %}
+{% endblock content %}

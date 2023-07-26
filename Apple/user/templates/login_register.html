@@ -1,0 +1,135 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Login/Register{% endblock title %}
+
+{% block content %}
+<!--css-->
+<style>
+    section{
+        min-height:100vh;
+        display:grid;
+        place-content:center;
+    }
+    #center{
+        display:grid;
+        place-content:center;
+    }
+   
+</style>
+
+<nav class="navbar bg-dark p-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" >
+        <img src={% static 'images/logo.png' %} style="width:50px"class="d-inline-block align-text-top" />
+      </a>
+    </div>
+</nav>
+
+{% if page == 'Login' %}
+<section id='center'>
+    
+    <div >
+        <div>
+            <h1>Sign In</h1>
+        </div>
+        <form method='POST' action=''>
+            {% csrf_token %}
+            <input type='email' class='form-control mb-3' placeholder='Email' name='email' required />
+            <input type='password' class='form-control mb-3' placeholder='Password' name='password'required />
+            <div>
+                <a class='btn btn-sm btn-secondary' href={{request.META.HTTP_REFERER}}>Back</a>
+                <input type='submit' value='Sign In' class='btn btn-outline-dark' />
+            </div>
+        </form>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <strong>{{msg}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>  
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% elif page == 'Register' %}
+<section id='center'>
+    
+    <div >
+        <div class='mb-3'>
+            <h1>Sign Up</h1>
+            <hr>
+        </div>
+        <form method='POST' action=''>
+            {% csrf_token %}
+            <div class='row'>
+                <div class='col-sm-6'>
+                    <div class='mb-3'>
+                        {{form.username.label}} <br>
+                        {{form.username}}
+                    </div>
+                    <div class='mb-3'>
+                        {{form.first_name.label}} <br>
+                        {{form.first_name}}
+                    </div>
+                    <div class='mb-3'>
+                        {{form.password1.label}} <br>
+                        {{form.password1}}
+                    </div>
+                </div>
+                <div class='col-sm-6'>
+                    <div class='mb-3'>
+                        {{form.email.label}} <br>
+                        {{form.email}}
+                    </div>
+                    <div class='mb-3'>
+                        {{form.last_name.label}} <br>
+                        {{form.last_name}}
+                    </div>
+                    <div class='mb-3'>
+                        {{form.password2.label}} <br>
+                        {{form.password2}}
+                    </div>
+                </div>
+            </div>
+            <div class='text-center mt-3'>
+                <a class='btn btn-secondary' href={{request.META.HTTP_REFERER}}>Back</a>
+                <input type='submit' value='Sign Up' class='btn btn-outline-dark' />
+            </div>
+        </form>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <strong>{{msg}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>  
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% else %}
+<section id='sec1'>
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>  
+        {% endfor %}
+    {% endif %}
+    <div class='text-center'>
+        <h1>Welcome to Apple</h1>
+        <hr>
+        <div class='col-sm-12'>
+            <a class='btn btn-outline-dark' href={% url 'login' %}>Sign In</a>
+            <a class='btn btn-outline-dark' href={% url 'register' %}>Sign Up</a>
+        </div>
+    <div>
+</section>
+<div class='bg-dark text-white text-center  p-2'>
+    <h6>Licenced bt Apple products india</h6>
+    <p><i class="bi bi-c-circle"></i> 2023</p>
+</div>
+
+{% endif %}
+
+{% endblock content %}
