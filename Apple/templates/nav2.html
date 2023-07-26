@@ -5,20 +5,20 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#applehome">Home</a>
+          <li class="nav-item mx-3">
+            <a class="nav-link active" aria-current="page" href="#applehome" style='font-size:20px'> <i class="fa-solid fa-house"></i></a>
           </li>
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
-          </li>
+          </li> {% endcomment %}
           {% if categories %}
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown mx-3">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Products
+              <b style='font-size:20px'>Products</b> <i class="fa-solid fa-mobile-screen-button fa-bounce" style="color: #ffffff;"></i>
             </a>
             <ul class="dropdown-menu">
               {% for item in categories %}
-                <li><a class="dropdown-item" href="#">{{item}}</a></li>
+                <li><a class="dropdown-item mb-2" href="#" style="font-size:18px "><b>{{item}}</b></a></li>
               {% endfor %}
               
               <li><hr class="dropdown-divider"></li>
@@ -26,11 +26,28 @@
             </ul>
           </li>
           {% endif %}
-          <li class="nav-item">
-            <a class="nav-link ">About</a>
+         
+          <li class="nav-item mx-3">
+            <a class="nav-link "><b style='font-size:20px'>Cart</b> <i class="fa-solid fa-cart-shopping fa-bounce" style="color: #f4db80;"></i></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link ">Contact</a>
+          <li class="nav-item mx-3">
+            <a class="nav-link "><b style='font-size:20px'>Wishlist</b> <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto  mb-2 mb-lg-0">
+          <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <b style='font-size:20px'>Settings</b> <i class="fa-solid fa-gear fa-spin"></i>
+            </a>
+            <ul class="dropdown-menu">
+             
+                <li><a class="dropdown-item" href="#">About</a></li>
+                <li><a class="dropdown-item" href="#">Customer Care <i class="fa-solid fa-headset"></i></a></li>
+             
+              
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Logout <i class="fa-solid fa-right-from-bracket" style="color: #ff0000;"></i></a></li>
+            </ul>
           </li>
         </ul>
         

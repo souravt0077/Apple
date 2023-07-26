@@ -1,35 +1,23 @@
 {% load static %}
-<div class="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
-    <div class="bg-dark p-4">
-      <h5 class="text-body-emphasis h4"></h5>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Logout</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" >{{request.user.username}}</a>
-              </li>
-              
-              
-            </ul>
-            
-          </div>
-        </div>
-      </nav>    </div>
+  <div class="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
+    <div class="bg-dark p-4 ">
+      <h2 class="text-body-emphasis h4 text-white">
+      </h2>
+      <div class='text-white container' >
+        <h4>Dear {{request.user.username}} <i class="fa-solid fa-heart fa-fade" style="color: #fafafa;"></i> , </h4>
+        <p>Greetings from Apple As we welcome this new day, we hope that it brings you joy, prosperity, and success. We're honored that you've chosen to spend a part of your day with us, and we are committed to making your visit worth your time.
+        We sincerely appreciate your interest in our company and we hope that our website will serve as a convenient and helpful resource for you. If you have any questions or need any assistance, please feel free to reach out to us at any time.</p>
+        <p>Thank you for visiting, and here's wishing you a splendid day!</p>
+        <p>Best regards,</p>
+        <p>The Team at Apple </p>
+      </div>
+      
+    </div>
   </div>
   <nav class="navbar navbar-dark bg-dark p-4">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span><img src={% static 'images/logo.png' %} style="width:50px" /></span>
+        <h1><i class="fa-brands fa-apple fa-beat"></i></h1>
       </button>
     </div>
   </nav>

@@ -64,10 +64,36 @@
         <img src={% static 'images/phones2.jpg' %} class='d-block w-100' id='img'  />
     </div>
 </section>
-<section id='applehome'>
+<section id='applehome' class='container'>
+
     <div class='text-center'>
+        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+            <h1>Product Categories</h1>
+
+        </div>
+        <hr>
+
+        <br>
         <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight">
-            <h1 >Some random text here....</h1>
+            {% if categories %}
+                <div class='row'>
+                    {% for item in categories %}
+                    
+                    <div class='col-sm-3'>
+                        <a href='#' style='text-decoration:none;color:black;'>
+                        <div class="card d-block w-100 shadow mb-3" style="width: 18rem;">
+                            <img src={{item.category_image.url}} class="card-img-top" alt="..." id='img'>
+                            <div class="card-body">
+                              <h5 class="card-title">{{item.name}}</h5>
+                              <p class="card-text">{{item.description}}</p>
+                            </div>
+                          </div>
+                        </a>
+
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
         </div>
     </div>
