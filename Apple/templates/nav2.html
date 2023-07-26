@@ -11,19 +11,21 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
+          {% if categories %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Products
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">I phone 14 series</a></li>
-              <li><a class="dropdown-item" href="#">i phone 13 series</a></li>
-              <li><a class="dropdown-item" href="#">i phone 12 series</a></li>
-              <li><a class="dropdown-item" href="#">i phone 11 series</a></li>
+              {% for item in categories %}
+                <li><a class="dropdown-item" href="#">{{item}}</a></li>
+              {% endfor %}
+              
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link ">About</a>
           </li>
