@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{% block title %}Product_view{% endblock title %}
+
+{% block content %}
+<style>
+    #center{
+        display:grid;
+        align-content:center;
+    }
+    .container{
+        min-height:100vh;
+    }
+</style>
+{% include 'nav2.html' %}
+
+<section class='container'>
+    <div>
+        
+    </div>
+    <div class='row'>
+        <div class='col-sm-6 p-5' id='center'>
+            {% if products %}
+                {% for item in products %}
+                
+                <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+                    <img src={{item.product_image1.url}} class='d-block w-100' />
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class='col-sm-6 p-5'>
+            {% if products %}
+                {% for item in products %}
+                <div class='text-center'>
+                    <h1>{{item.name}} <small>({{item.varient}})</small></h1>
+                    <br>
+                    <h3> <i class="fa-solid fa-indian-rupee-sign"></i> <span class='text-success'>{{item.offer_price|stringformat:'d'}}/- </span> <small class='text-secondary'><strike>{{item.original_price|stringformat:'d'}}/-</strike></small></h3>
+                </div>
+                <div>
+                    <h3>Features</h3>
+                    <hr>
+                    <p>{{item.description}}</p>
+                    <br>
+                    <h3>Description</h3>
+                    <hr>
+                    <p>{{item.small_description}}</p>
+                </div>
+                <div class='row mt-5 '>
+                    <div class='col-sm-12 text-center mb-3'>
+                        <button class='mx-3 wish'  id='cartbtn' >   Cart <i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
+                        <button  id='cartbtn' class='wish'>  WishList <i class="fa-sharp fa-solid fa-heart fa-fade" style="color: #ff0026;"></i></button>
+
+                    </div>
+                    <div class='text-end '>
+                    </div>
+                </div>
+
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

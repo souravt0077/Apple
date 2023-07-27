@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+
+{% block title %}Product Category{% endblock title %}
+
+{% block content %}
+<style>
+    section{
+        min-height:100vh;
+    }
+    #img_container{
+        width:min(100% - 15px,850px);
+        margin-inline:auto;
+        mix-blend-mode: multiply;
+        
+    }
+    #img_container:hover{
+        transform: scale(1.2);
+        transition: 1.5s;
+    }
+    
+</style>
+
+{% if category %}
+    {% for item in category %}
+        <section>
+            <img src={{item.category_image.url}} class='d-block w-100' id='img_container'/>
+            {% include 'nav2.html' %}
+            <div class='text-center p-5'>
+                <h1>{{item.name}}</h1>
+                <p>{{item.description}}</p>
+            </div>
+
+            {% if products %}
+            <div class='container'>
+                <div class='row'>
+                    {% for item in products %}
+
+                        <div class='col-sm-4'>
+                            {% comment %} <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop"> {% endcomment %}
+                                <a href={% url 'product_view' item.slug %} style='text-decoration:none;color:black;'>
+                                    <div class="card mb-3 d-block w-100 bg-light p-5" style="width: 18rem;">
+                                        <img src={{item.product_image1.url}} class="card-img-top d-block w-100" alt="..." id='img_container'>
+                                        <div class="card-body">
+                                        <h5 class="card-title text-center">{{item.name}} <small>({{item.varient}})</small></h5>
+                                        {% comment %} <p class="card-text">{{item.small_description}}</p> {% endcomment %}
+                                        </div>
+                                    </div>  
+                                </a>
+                            {% comment %} </div>              {% endcomment %}
+
+                        </div> 
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+        <section class='container'>
+            
+        </section>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}

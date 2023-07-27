@@ -1,5 +1,9 @@
 from django.db import models
 
+
+
+
+
 class Category(models.Model):
     slug=models.SlugField()
     name=models.CharField(max_length=200,blank=False,null=False)
@@ -14,15 +18,17 @@ class Category(models.Model):
     class Meta:
         ordering = ['-created']
 
+
 class Products(models.Model):
     slug=models.SlugField()
     name=models.CharField(max_length=250,blank=False,null=False)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     product_image1=models.ImageField(upload_to='product_image1')
-    product_image2=models.ImageField(upload_to='product_image2')
-    product_image3=models.ImageField(upload_to='product_image3')
-    product_image4=models.ImageField(upload_to='product_image4')
-    product_image5=models.ImageField(upload_to='product_image5')
+    product_image2=models.ImageField(upload_to='product_image2',null=True,blank=True)
+    product_image3=models.ImageField(upload_to='product_image3',null=True,blank=True)
+    product_image4=models.ImageField(upload_to='product_image4',null=True,blank=True)
+    product_image5=models.ImageField(upload_to='product_image5',null=True,blank=True)
+    varient=models.CharField(max_length=150,blank=True,null=True)
     original_price=models.FloatField()
     offer_price=models.FloatField()
     description=models.TextField(max_length=500)
@@ -31,7 +37,7 @@ class Products(models.Model):
     created=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return "{}-{}".format(self.name,self.varient)
     
     class Meta:
         ordering = ['-created']

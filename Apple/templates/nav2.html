@@ -1,12 +1,12 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary p-3 sticky-top " data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-body-tertiary p-3  " data-bs-theme="dark">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon" title='Main Menu'></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
           <li class="nav-item mx-3">
-            <a class="nav-link active" aria-current="page" href="#applehome" style='font-size:20px'> <i class="fa-solid fa-house"></i></a>
+            <a class="nav-link active" aria-current="page" href={% url 'home' %} style='font-size:20px'> <i class="fa-solid fa-house"></i></a>
           </li>
           {% comment %} <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
@@ -18,7 +18,7 @@
             </a>
             <ul class="dropdown-menu">
               {% for item in categories %}
-                <li><a class="dropdown-item mb-2" href="#" style="font-size:18px "><b>{{item}}</b></a></li>
+                <li><a class="dropdown-item mb-2" href={% url 'category_view' item.slug %} style="font-size:18px "><b>{{item}}</b></a></li>
               {% endfor %}
               
               <li><hr class="dropdown-divider"></li>
