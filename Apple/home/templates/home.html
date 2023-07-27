@@ -13,6 +13,10 @@
     #img{
         mix-blend-mode: multiply;
     }
+    #img_container{
+        width:min(100% - 15px,850px);
+        margin-inline:auto;
+    }
     
 </style>
 <!--message-->
@@ -51,7 +55,7 @@
 <section id='applehome'>
     <div class='text-center'  >
         <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft " >
-                <img src={% static 'images/apple.png' %}  />
+                <img src={% static 'images/apple.png' %} id='img_container' />
             <h6 > <mark class='p-2 rounded'>All brand new I phones</mark> </h6>
         </div>
     </div>
@@ -81,7 +85,7 @@
                     
                     <div class='col-sm-3'>
                         <a href='#' style='text-decoration:none;color:black;'>
-                        <div class="card d-block w-100 shadow mb-3" style="width: 18rem;">
+                        <div class="card d-block w-100 shadow mb-3" style="width: 18rem; height:300px">
                             <img src={{item.category_image.url}} class="card-img-top" alt="..." id='img'>
                             <div class="card-body">
                               <h5 class="card-title">{{item.name}}</h5>
