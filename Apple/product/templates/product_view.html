@@ -49,6 +49,11 @@
                     <hr>
                     <p>{{item.small_description}}</p>
                     <br>
+                    {% if item.quantity <= 3 and not item.quantity == 0 %}
+                    <div>
+                        <p class='text-danger'>Only {{item.quantity}} available. secure your order now</p>
+                    </div>
+                    {% endif %}
                     <h5>Qunatity:</h5>
                     <select class="form-select prod_qty" aria-label="Default select example" style="width:150px;">
                         <option selected >1</option>
@@ -61,13 +66,19 @@
                 </div>
                 <div class='row mt-5 '>
                     <div class='col-sm-12 text-center mb-3'>
-                        {{name}}
-                        {% if sameprod %}
-                            <button class='mx-3 mb-3 cart_btn'  id='cartbtn'>In Cart<i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
-                        {% else %}
-                            <button class='mx-3 cart_btn mb-3'  id='cartbtn' >   Cart <i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
-                        {% endif %}
-                        <button  id='cartbtn' class='whish_btn'>  WishList <i class="fa-sharp fa-solid fa-heart fa-fade" style="color: #ff0026;"></i></button>
+                        
+                            {% if item.quantity == 0 %}
+                                <button class='mx-3 mb-3 cart_btn text-danger'  id='cartbtn' >Out of stock <i class="fa-solid fa-triangle-exclamation fa-fade"></i></button>
+                            {% else %}
+                            <form>
+                                {% if sameprod %}
+                                    <a type='button' class='mx-3' id='cartbtn' style="text-decoration:none;color:black; " href={% url 'cart' %}>Go to cart</a>
+                                {% else %}
+                                    <button class='mx-3 cart_btn mb-3'  id='cartbtn' >   Cart <i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
+                                {% endif %}
+                            {% endif %}
+                            <button  id='cartbtn' class='whish_btn'>  WishList <i class="fa-sharp fa-solid fa-heart fa-fade" style="color: #ff0026;"></i></button>
+                        </form>
                     </div>
                     <div class='text-end '>
                     </div>

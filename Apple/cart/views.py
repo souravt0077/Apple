@@ -3,14 +3,23 @@ from django.views import View
 from django.http import JsonResponse
 from product.models import Products
 from .models import Cart
+from product.models import Category
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
-
+@method_decorator(login_required(login_url='welcome'), name='dispatch')
 class Cart_view(View):
     def get(self,request):
-        context={}
+        cart=Cart.objects.filter(user=request.user)
+        cart_items=cart.count()
+        categories=Category.objects.all() # for navbar
+        
+
+        context={'cart':cart,'categories':categories,'cart_items':cart_items}
         return render(request,'cart.html',context)
 
+@login_required(login_url='welcome')
 def add_to_cart(request):
     if request.method == 'POST': #checking the request is POST or not
         
@@ -20,6 +29,9 @@ def add_to_cart(request):
 
             if prod_check:
                 qty=request.POST.get('qty') #getting the quantity enterd bythe user
+
+                if prod_check.quantity == 0:
+                    return JsonResponse({"status":"Out of stock"})
 
                 if Cart.objects.filter(product_id=prod_id,user=request.user): # checking the product is already in the cart or not
                     return JsonResponse({"status":"Product allready in cart"})

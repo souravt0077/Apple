@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     $(".cart_btn").click(function (e) { 
-        e.preventDefault();
+        // e.preventDefault();
         let prod_id = $('.prod_id').val() // getting product id
         let prod_qty = $(".prod_qty").val() // getting quantity 
         let token = $('input[name=csrfmiddlewaretoken]').val()
@@ -19,7 +19,7 @@ $(document).ready(function () {
             dataType: "Json",
             success: function (response) {
                 alert(response.status)
-                $(btn.html("Cart added"))
+                // $(btn.html("Cart added"))
             }
         });
 
