@@ -22,7 +22,7 @@ html{
     transform: translateX(4px) translateY(4px);
     box-shadow: 2px 2px #121212;
 }
-.wish:hover::before {
+/* #cartbtn:hover::before {
     content: 'ADD TO';
-}
+} */
   

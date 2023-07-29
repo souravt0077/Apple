@@ -1,8 +1,10 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block title %}Product_view{% endblock title %}
 
 {% block content %}
+
+
 <style>
     #center{
         display:grid;
@@ -35,7 +37,8 @@
                 <div class='text-center'>
                     <h1>{{item.name}} <small>({{item.varient}})</small></h1>
                     <br>
-                    <h3> <i class="fa-solid fa-indian-rupee-sign"></i> <span class='text-success'>{{item.offer_price|stringformat:'d'}}/- </span> <small class='text-secondary'><strike>{{item.original_price|stringformat:'d'}}/-</strike></small></h3>
+                    <h3> <i class="fa-solid fa-indian-rupee-sign"></i> <span class='text-success'>{{item.offer_price|stringformat:'d'}}/- </span> <small class='text-secondary'><strike>{{item.original_price|stringformat:'d'}}/-</strike></small> <small class='text-white rounded bg-danger fw-3 shadow p-1 d-block w-100 text-center my-3'> {{offer_per|stringformat:'d'}}% off</small>
+                    </h3>
                 </div>
                 <div>
                     <h3>Features</h3>
@@ -45,12 +48,26 @@
                     <h3>Description</h3>
                     <hr>
                     <p>{{item.small_description}}</p>
+                    <br>
+                    <h5>Qunatity:</h5>
+                    <select class="form-select prod_qty" aria-label="Default select example" style="width:150px;">
+                        <option selected >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                    </select>
+                    {% csrf_token %}
+                    <input type='hidden' value={{item.id}} class='prod_id' />
                 </div>
                 <div class='row mt-5 '>
                     <div class='col-sm-12 text-center mb-3'>
-                        <button class='mx-3 wish'  id='cartbtn' >   Cart <i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
-                        <button  id='cartbtn' class='wish'>  WishList <i class="fa-sharp fa-solid fa-heart fa-fade" style="color: #ff0026;"></i></button>
-
+                        {{name}}
+                        {% if sameprod %}
+                            <button class='mx-3 mb-3 cart_btn'  id='cartbtn'>In Cart<i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
+                        {% else %}
+                            <button class='mx-3 cart_btn mb-3'  id='cartbtn' >   Cart <i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
+                        {% endif %}
+                        <button  id='cartbtn' class='whish_btn'>  WishList <i class="fa-sharp fa-solid fa-heart fa-fade" style="color: #ff0026;"></i></button>
                     </div>
                     <div class='text-end '>
                     </div>

@@ -19,7 +19,14 @@
         width:min(100% - 15px,850px);
         margin-inline:auto;
     }
-    
+    {% comment %} #bgi{
+        background-image:url({% static 'images/iphonese3.png' %});
+        min-height:100vh;
+        z-index:1;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;    }
+     {% endcomment %}
 </style>
 <!--message-->
 <div class='container mt-3'>
@@ -103,16 +110,11 @@
             <img src={% static 'images/iphonese2.jpg' %} class='d-block w-100' id='img' />
         </div>
     </div>
-    
-    <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
-        <div class='text-center'>
-            <img src={% static 'images/iphonese3.png' %} class='d-block w-100' id='img' />
-        </div>
+</section>
+<section id='applehome'>
+    <div class='text-center '>
+        <img src={% static 'images/iphonese3.png' %} class='d-block w-100'/>
     </div>
-   
-    
-
-
 </section>
 
 <section id='applehome' >
