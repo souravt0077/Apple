@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse 
 from product.models import Products
 from .models import Cart
 from product.models import Category
@@ -47,3 +47,12 @@ def add_to_cart(request):
         else:
             return JsonResponse({"status":"Login to continue"})
     return redirect('home')
+
+
+def delete_all_cart(request):
+    cart=Cart.objects.filter(user=request.user)
+    cart.delete()
+    return redirect('cart')
+
+# def delete_cart(request,pk):
+#     pass
