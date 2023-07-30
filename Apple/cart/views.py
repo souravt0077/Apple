@@ -6,6 +6,7 @@ from .models import Cart
 from product.models import Category
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 # Create your views here.
 @method_decorator(login_required(login_url='welcome'), name='dispatch')
@@ -52,7 +53,12 @@ def add_to_cart(request):
 def delete_all_cart(request):
     cart=Cart.objects.filter(user=request.user)
     cart.delete()
+    messages.success(request,'Cart cleared successfully')
     return redirect('cart')
 
-# def delete_cart(request,pk):
-#     pass
+def delete_cart(request,pk):
+    cart=Cart.objects.filter(user=request.user).get(id=pk)
+    cart.delete()
+    messages.success(request,'{} ({}) removed'.format(cart.product.name,cart.product.varient))
+    return redirect('cart')
+

@@ -11,6 +11,6 @@ class Home(View):
         categories=Category.objects.all()
         cart=Cart.objects.filter(user=request.user)
         cart_items=cart.count()
-        context={'categories':categories,'cart_items':cart_items}
+        context={'categories':categories,'cart_items':cart_items,'cart':cart}
         return render(request,'home.html',context)
 

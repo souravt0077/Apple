@@ -39,3 +39,10 @@ class Product_view(View):
         cart_items=cart.count()
         context={'products':products,'categories':categories,'offer_per':offer_per,'sameprod':sameprod,'cart':cart,'cart_items':cart_items}
         return render(request,'product_view.html',context)
+
+def category_show(request):
+    categories=Category.objects.all()
+    cart=Cart.objects.filter(user=request.user)
+    cart_items=cart.count()
+    context={'categories':categories,'cart_items':cart_items,'cart':cart}
+    return render(request,'category_show.html',context)

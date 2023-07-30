@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block titile %}All Caregories{% endblock titile %}
+
+{% block content %}
+<link rel='stylesheet' href={% static 'css/category_show.css' %} />
+
+{% include 'nav2.html' %}
+
+{% if categories %}
+<div class="gallery">
+    <div class='text-center'>
+        <h1>Apple</h1>
+    </div>
+	<ul class="cards">
+		<li class='text-white'>I Phone</li>
+        {% for item in categories %}
+		<a href={% url 'category_view' item.slug %} ><li class='text-white'><small>{{item.name}}</small></li></a>
+        {% endfor %}
+        {% for item in categories %}
+		<a href={% url 'category_view' item.slug %}><li  class='text-white'><small>{{item.name}}</small></li></a>
+        {% endfor %}
+	</ul>
+</div>
+
+{% endif %}
+  
+  
+{% endblock content %}
