@@ -37,9 +37,16 @@
           </li>
           <li class="nav-item mx-3">
             {% if wishlist %}
-            <a class="nav-link "><b style='font-size:20px'>Wishlist</b> <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
+            <a class="nav-link" href='#'><b style='font-size:20px'>Wishlist</b> <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
             {% else %}
-            <a class="nav-link "><b style='font-size:20px'>Wishlist</b> <i class="fa-solid fa-heart " style="color: #ffffff;"></i></a>
+            <a class="nav-link" href='#'><b style='font-size:20px'>Wishlist</b> <i class="fa-solid fa-heart " style="color: #ffffff;"></i></a>
+            {% endif %}
+          </li>
+          <li class="nav-item mx-3">
+            {% if wishlist %}
+              <a class="nav-link" href='#'><b style='font-size:20px'>My Orders</b> <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
+            {% else %}
+              <a class="nav-link" href='#'><b style='font-size:20px'>My Orders</b> <i class="fa-solid fa-heart " style="color: #ffffff;"></i></a>
             {% endif %}
           </li>
         </ul>

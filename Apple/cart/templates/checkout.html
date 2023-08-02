@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+
+{% block title %}Checkout{% endblock title %}
+
+{% block content %}
+{% include 'nav2.html' %}
+<section class='container mt-3'>
+    <div class='row'>
+        <div class='col-sm-6'>
+            <div class='text-center'>
+                <h1>Checkout Items</h1>
+                <hr>
+                <div>
+                    {% if cart_items %}
+                    <div class='row border-end border-dark' >
+                        {% for item in cart_items %}
+                        <div class='col-sm-4' style="display:grid;align-content:center;">
+                            <img src={{item.product.product_image1.url}} class='d-block w-100' />
+                        </div>
+                        <div class='col-sm-4' style="display:grid;align-content:center;">
+                            <h5>{{item.product.name}} </h5>
+                            <p>({{item.product.varient}})</p>
+                            <h6><i class="fa-solid fa-indian-rupee-sign"></i> <span  class='text-success'>{{item.product.original_price|stringformat:'d'}}</span> <span class='text-secondary'><strike ><small>{{item.product.offer_price|stringformat:'d'}}</small></strike> /-</span> </h6>
+                        </div>
+                        <div class='col-sm-4' style="display:grid;align-content:center;">
+                            <input type='number' readonly value={{item.quantity}} class='form-control' />
+                        </div>
+                        {% endfor %}
+                        <div class='border-top p-3'>
+                            <h5>Total Amout : <i class="fa-solid fa-indian-rupee-sign"></i><span class='text-success'> {{total|stringformat:'d'}}/- </span><strike class='text-secondary'>{{og_total|stringformat:'d'}} /- </strike></h5>
+                            <p>congrat's {{request.user.username}} saved <b>{{save_perce|stringformat:'d'}}</b> on this purchase </p>
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <div class='text-center'>
+                <h1>User Address</h1>
+                <hr>
+                <div>
+                    <form method='POST' action={% url 'place_order' %}>
+                        {% csrf_token %}
+                        <div class='row container'>
+                            <div class='col-sm-6'>
+                                <input type='text' value='{{request.user.first_name}}' required placeholder='First Name' class='form-control mb-3' name='fname' />
+                                <input type='email' value='{{request.user.email}}' required placeholder='E-mail' class='form-control mb-3' name='email' />
+                                <input type='text' value='{{user_profile.city}}'  required placeholder='City' class='form-control mb-3' name='city' />
+                                <input type='text' value='{{user_profile.state}}' required placeholder='State' class='form-control mb-3' name='state' />
+                                <input type='text' value='{{user_profile.pin_code}}' required placeholder='Pin Code' class='form-control mb-3' name='pincode' />
+                                <input type='hidden' value='COD' name='payment_mode' />
+
+                            </div>
+                            <div class='col-sm my-4-6'>
+                                <input type='text' value='{{request.user.last_name}}' required placeholder='Last Name' class='form-control mb-3' name='lname' />
+                                <input type='number' value='{{user_profile.phone}}' required placeholder='phone' class='form-control mb-3' name='phone' />
+                                <input type='text' value='{{user_profile.district}}' required placeholder='District' class='form-control mb-3' name='district' />
+                                <input type='text' value='{{user_profile.country}}' required placeholder='Country' class='form-control mb-3' name='country' />
+                                <input type='text'  placeholder='Message (*If you want)' class='form-control mb-3' name='message' />
+                            </div>
+                            <input type='text' value='{{user_profile.address}}' required name='address' placeholder='Address' class='form-control my-3' />
+                        </div>
+
+                        <div>
+                            <input type='submit' value='Place order' class='btn btn-outline-success' />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

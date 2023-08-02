@@ -36,13 +36,12 @@
     {% if cart %}
     <div class='text-end mb-3'>
         <button  id='cartbtn' class='whish_btn text-success' data-bs-toggle="modal" data-bs-target="#checkoutModal"> Checkout <i class="fa-solid fa-cash-register fa-fade"></i></button>
-        <button class='btn btn-sm btn-outline-danger mx-3' data-bs-toggle="modal" data-bs-target="#clearallModal">Clear Cart</button>
+        <button class='btn btn-sm btn-outline-danger mx-3' type='submit' data-bs-toggle="modal" data-bs-target="#clearallModal">Clear Cart</button>
     </div>
     <div>
         <div class='row'>
             {% for item in cart %}
             <div class='col-sm-12 item' >
-                <button ></button>
                 <a href={% url 'delete_cart' item.id %} class='remove btn btn-sm btn-outline-dark p-2 my-2 ' style="display:none; width:100px">Remove <i class="fa-solid fa-trash"></i></a>
 
                     <div class='row bg-light shadow my-3 p-3'>
@@ -64,13 +63,7 @@
                         </div>
                         <div class='col-sm-3' style="display:grid;align-content:center;">
                             <h5>Qunatity:</h5>
-                            <select class="form-select update_qty"  aria-label="Default select example">
-                                <option selected >{{item.quantity}}</option>
-                                <option >1</option>
-                                <option >2</option>
-                                <option >3</option>
-                                <option >4</option>
-                            </select>
+                            <input type='number' value={{item.quantity}} class='form-control' readonly />                            
                         </div>
                     </div>
                 </a>
@@ -102,14 +95,39 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{cart_items}} {% if cart_items > 1 %}products {% else %}Product {% endif %}on the Way to checkout</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+            {% if cart %}
+            <div class='row'>
+                {% for item in cart %}
+                    <div class='col-sm-4' style='display:grid;align-content:center'>
+                        <img src={{item.product.product_image1.url}} class='d-block w-100 ' />
+                    </div>
+                    <div class='col-sm-4' style='display:grid;align-content:center'>
+                        <h5>{{item.product.name}} <small>({{item.product.varient}})</small> </h5>
+                        <h6><i class="fa-solid fa-indian-rupee-sign"></i> <b class='text-success'>{{item.product.offer_price|stringformat:'d'}}</b> <small><strike class='text-secondary'>{{item.product.original_price|stringformat:'d'}}</strike></small> /-</h6>
+                    </div>
+                    <div class='col-sm-4' style='display:grid;align-content:center'>
+                        <input value={{item.quantity}} readonly class='d-block w-100' />
+                    </div>
+                <hr>
+                {% endfor %}
+            </div>
+            <br>
+            <div >
+                <h5>Total Amout : <i class="fa-solid fa-indian-rupee-sign"></i><span class='text-success'> {{total|stringformat:'d'}}/- </span><strike class='text-secondary'>{{og_total|stringformat:'d'}} /- </strike></h5>
+                <p>congrat's {{request.user.username}} saved <b>{{save_perce|stringformat:'d'}}</b> on this purchase </p>
+            </div>
+            {% endif %}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Exit</button>
+            <form method = 'POST' action={% url 'checkout_view' %}>
+                {% csrf_token %}
+                <a type='submit' class='btn btn-success checkout_btn' href={% url 'checkout_view' %}>Go To Checkout</a>
+            </form>
         </div>
       </div>
     </div>
@@ -135,11 +153,13 @@
         {% endif %}
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
           <a class='btn  btn-outline-danger mx-3' title='Delete all cart items' href={% url 'delete_all_cart' %}>Remove</a>
         </div>
       </div>
     </div>
   </div>
 
+ 
   
 {% endblock content %}
