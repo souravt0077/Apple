@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% block title %}View order{% endblock title %}
+
+{% block content %}
+<style>
+    #center{
+        display:grid;
+        align-content:center;
+    }
+</style>
+
+
+
+{% include 'nav2.html' %}
+<section class='container mt-4'>
+    <div class='row'>
+        <div class='col-sm-6'>
+            <div class='text-center'>
+                <h3>Order Items</h3>
+                <hr>
+                {% if order_items %}
+                    {% for item in order_items %}
+                        <div class='row'>
+                            <div class='col-sm-4' id='center'>
+                                <a href={% url 'product_view' item.product.slug %}><img src={{item.product.product_image1.url}} class='d-block w-100' /></a>
+                            </div>
+                            <div class='col-sm-4' id='center'>
+                                <h5>{{item.product.name}}</h5>
+                                <p>({{item.product.varient}})</p>
+                                <h6>Rs.<span class='text-success'>{{item.product.offer_price}}</span> <span class='text-secondary'><small><strike>{{item.product.original_price}}</strike></small></span>/- </h6>
+                            </div>
+                            <div class='col-sm-4' id='center'>
+                                <input type='number' value={{item.quantity}} readonly class='form-control' />
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                {% endif %}
+                
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <div class='text-center'>
+                <h3>Order detials</h3>
+                <hr>
+                <div class='row'>
+                    <div class='col-sm-6'>
+                        <input type='text' value='{{request.user.first_name}}' required placeholder='First Name' class='form-control mb-3' name='fname' />
+                        <input type='email' value='{{request.user.email}}' required placeholder='E-mail' class='form-control mb-3' name='email' />
+                        <input type='text' value='{{orders.city}}'  required placeholder='City' class='form-control mb-3' name='city' />
+                        <input type='text' value='{{orders.state}}' required placeholder='State' class='form-control mb-3' name='state' />
+                        <input type='text' value='{{orders.pin_code}}' required placeholder='Pin Code' class='form-control mb-3' name='pincode' />
+                        <input type='hidden' value='COD' name='payment_mode' />
+                    </div>
+                    <div class='col-sm-6'>
+                        <input type='text' value='{{request.user.last_name}}' required placeholder='Last Name' class='form-control mb-3' name='lname' />
+                        <input type='number' value='{{orders.phone}}' required placeholder='phone' class='form-control mb-3' name='phone' />
+                        <input type='text' value='{{orders.district}}' required placeholder='District' class='form-control mb-3' name='district' />
+                        <input type='text' value='{{orders.country}}' required placeholder='Country' class='form-control mb-3' name='country' />
+                        <input type='text' value='{{orders.message}}'  placeholder='Message (*If you want)' class='form-control mb-3' name='message' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

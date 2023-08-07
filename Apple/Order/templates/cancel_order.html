@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block title %}Are you sure ?{% endblock title %}
+
+{% block content %}
+
+<style>
+    section{
+        min-height:100vh;
+        display:grid;
+        align-content:center;
+    }
+</style>
+
+
+
+<section class='text-center container'>
+    <div id='cancel' >
+        <h1>Are you sure?</h1>
+        <p>Do you want to cancel <b>"{{order}}" </b> order ?</p>
+        <div>
+            <a class='btn btn-sm btn-success' href={{request.META.HTTP_REFERER}}>Back to orders</a>
+            <a type='submit' class='btn btn-sm btn-outline-danger cancel_btn' href={% url 'canceled_order' order.id %}>Yes Cancel the order</a>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

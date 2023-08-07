@@ -62,7 +62,12 @@ def place_order(request):
                 total = grand_total 
             else:
                 total = grand_total + 40 # if amount is lessthan 50 k then add 40rs for shipping charge
-        
+
+            # checking the product quantity is not lessthan the cart quantity
+            if not item.product.quantity >= item.quantity:
+                messages.error(request,"Can't add to cart. Insufitient quantity please check the quantity of the product ...  ")
+                return redirect('cart')
+            
         new_order.total_price = total 
 
         tranckno = request.user.username + str(random.randint(1111111,9999999))
@@ -81,16 +86,57 @@ def place_order(request):
                 price= item.product.offer_price,
                 quantity = item.quantity
             )
-            order_product = Products.objects.filter(id = item.product.id).first()
-            order_product.quantity = order_product.quantity - item.quantity
+            # removing cart quantity from product
+            order_product = Products.objects.filter(id = item.product.id).first() 
+            order_product.quantity = order_product.quantity - item.quantity 
             order_product.save()
-        
+
+        # clearing the cart products
         cart.delete()
         messages.success(request,'Order confirmed')
         return redirect('home')
 
+def my_orders(request):
+    orders=Order.objects.filter(user=request.user)[:3]
+    order=False
+    for item in orders:
+        if item.status == 'pending' or item.status == 'out for shipping':
+            order=True
+            break
+        break
+    cart = Cart.objects.filter(user=request.user)
+    context={'orders':orders,'order':order,'cart':cart}
+    return render(request,'myorders.html',context)
 
 
+def canceling_order(request,pk):
+    order=Order.objects.get(id=pk)
+    context={'order':order}
+    return render(request,'cancel_order.html',context)
+
+def canceled_order(request,pk):
+    order=Order.objects.get(id=pk)
+    order.status = 'canceled'
+    order.save()
+    order_items=OrderItem.objects.filter(order=order)
+    for item in order_items:
+        product=Products.objects.filter(id=item.product_id).first()
+        product.quantity = product.quantity + item.quantity
+        product.save()
+    
+    messages.success(request,'Order Canceled')
+    return redirect('my_orders')
+
+def view_order(request,pk):
+    orders=Order.objects.get(id=pk)
+    order_items=OrderItem.objects.filter(order__id=orders.id)
+    context={'orders':orders,'order_items':order_items}
+    return render(request,'view_order.html',context)
+
+def order_history(request):
+    orders=Order.objects.filter(user=request.user)
+    context={'orders':orders}
+    return render(request,'order_history.html',context)
         
 
 
@@ -113,104 +159,6 @@ def place_order(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def place_order(request):
-#     if request.method == 'POST':
-#         current_user=User.objects.filter(id=request.user.id).first()
-
-#         if not current_user.first_name :
-#             current_user.first_name = request.POST.get('fname')
-#             current_user.last_name = request.POST.get('lname')
-#             current_user.save()
-
-#         if not Profile.objects.filter(user=request.user):
-#             userprofile=Profile()
-#             userprofile.user = request.user
-#             userprofile.fname = request.POST.get('fname')
-#             userprofile.lname = request.POST.get('lname')
-#             userprofile.email = request.POST.get('email')
-#             userprofile.city = request.POST.get('city')
-#             userprofile.state = request.POST.get('state')
-#             userprofile.pin_code = request.POST.get('pincode')
-#             userprofile.phone = request.POST.get('phone')
-#             userprofile.district = request.POST.get('district')
-#             userprofile.country = request.POST.get('country')
-#             userprofile.address = request.POST.get('address')
-#             userprofile.save()
-
-#         neworder=Order()
-#         neworder.user=request.user
-#         neworder.fname=request.POST.get('fname')
-#         neworder.email=request.POST.get('email')
-#         neworder.city=request.POST.get('city')
-#         neworder.state=request.POST.get('state')
-#         neworder.pin_code=request.POST.get('pincode')
-#         neworder.lname=request.POST.get('lname')
-#         neworder.phone=request.POST.get('phone')
-#         neworder.district=request.POST.get('district')
-#         neworder.country=request.POST.get('country')
-#         neworder.message=request.POST.get('message')
-#         neworder.address=request.POST.get('address')
-#         neworder.payment_mode=request.POST.get('payment_mode')
-
-#         cart_items=Cart.objects.filter(user=request.user)
-
-#         grand_total =0
-#         og_total=0
-        
-#         for item in cart_items:
-#             og_price = item.product.original_price * item.quantity
-#             og_total = og_total + og_price # total original amount
-#             total_price = item.product.offer_price * item.quantity
-#             grand_total = grand_total + total_price # total offerd amount
-        
-#             if grand_total > 50000:
-#                 total = grand_total
-#             else:
-#                 total = grand_total + 40
-        
-#         neworder.total_price = total
-
-#         trackno=request.user.username + str(random.randint(1111111,9999999))
-#         while Order.objects.filter(tracking_no=trackno) is None:
-#             trackno=request.user + str(random.randint(1111111,9999999))
-        
-#         neworder.tracking_no = trackno
-#         neworder.save()
-
-#         for item in cart_items:
-#             OrderItem.objects.create(
-#                 order=neworder,
-#                 product=item.product,
-#                 price=item.product.offer_price,
-#                 quantity=item.quantity
-#             )
-#             # to reduce the quantity from available stock
-#             orderproduct = Products.objects.filter(id=item.product_id).first()
-#             orderproduct.quantity = orderproduct.quantity - item.quantity
-#             orderproduct.save()
-        
-#         # clear user cart
-#         Cart.objects.filter(user=request.user).delete()
-#         messages.success(request,'order has been placed successfully')
-#         return redirect('home')
-#     return redirect('home')
 
 
 

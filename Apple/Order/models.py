@@ -28,11 +28,12 @@ class Order(models.Model):
     status = models.CharField(max_length=150,choices=order_status,default='pending')
     message = models.TextField(max_length=500,null=True,blank=True)
     tracking_no = models.CharField(max_length=250,null=True)
+    cancel_reason = models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{}-{}-{}".format(self.fname,self.lname,self.tracking_no)
+        return "{}-{}-{}".format(self.fname,self.tracking_no,self.status)
     
     class Meta:
         ordering = ['-created_at']

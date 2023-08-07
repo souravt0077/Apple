@@ -34,7 +34,6 @@ class Cart_view(View):
             total = grand_total + 40
         
         save_perce = og_total - total # saved amount
-
         
         
         context={'cart':cart,'categories':categories,'cart_items':cart_items,'total':total,'og_total':og_total,'save_perce':save_perce}
@@ -93,7 +92,9 @@ def Checkout_view(request):
         og_total = og_total + og_price # total original amount
         total_price = item.product.offer_price * item.quantity
         grand_total = grand_total + total_price # total offerd amount
-    
+
+        
+           
     if grand_total > 50000:
         total = grand_total
     else:

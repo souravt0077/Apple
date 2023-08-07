@@ -4,6 +4,7 @@ from .models  import Category,Products
 from cart.models import Cart
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from wishlist.models import Wishlist
 
 @method_decorator(login_required(login_url='welcome'), name='dispatch')
 class Category_view(View):
@@ -23,10 +24,10 @@ class Product_view(View):
         categories=Category.objects.all() # for navbar
         products=Products.objects.filter(slug=slug)
         for p in products:
-            value=(p.offer_price/p.original_price)
-        offer_per=100-value*100
+            value=100-(p.offer_price/p.original_price)*100
+        offer_per=value
 
-        user_cart=Cart.objects.filter(user=request.user)
+        user_cart=Cart.objects.filter(user=request.user) # for change cart button to go to cart
         sameprod=False
         for prod in user_cart:
            cart_prod_id=prod.product.id
@@ -34,10 +35,21 @@ class Product_view(View):
                prod_id=p.id
                if cart_prod_id == prod_id:
                    sameprod=True
+        
+        user_wishlist = Wishlist.objects.filter(user=request.user)
+        sameitem=False
+        for item in user_wishlist:
+            wish_prod_id = item.product.id
+            for prod in products:
+                product_id = prod.id
+                if wish_prod_id == product_id:
+                    sameitem = True
 
         cart=Cart.objects.filter(user=request.user)
         cart_items=cart.count()
-        context={'products':products,'categories':categories,'offer_per':offer_per,'sameprod':sameprod,'cart':cart,'cart_items':cart_items}
+
+
+        context={'products':products,'categories':categories,'offer_per':offer_per,'sameprod':sameprod,'cart':cart,'cart_items':cart_items,'sameitem':sameitem}
         return render(request,'product_view.html',context)
 
 def category_show(request):

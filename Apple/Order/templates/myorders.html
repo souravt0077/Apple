@@ -1,0 +1,66 @@
+{% extends 'main.html' %}
+
+{% block title %}My Orders{% endblock title %}
+
+{% block content %}
+{% include 'nav2.html' %}
+
+<style>
+    a{
+        text-decoration:none;
+    }
+</style>
+
+<div class='container'>
+
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{msg}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>       
+        {% endfor %}
+    {% endif %}
+
+
+    {% if orders %}
+        <div class='row container'>
+            {% for item in orders %}
+                <div class='col-sm-4 '>
+                    <div class="card mx-3 my-3 shadow" style="width: 20rem;">
+                        <div class="card-body ">
+                            <h5 class="card-title"></h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{forloop.counter}}</h6>
+                            <p>Status: {% if item.status == 'pending' %}<span class='text-warning'>{{item.status}}</span> {% elif item.status == 'out for shipping' %}<span class='text-info'>{{item.status}}</span>{% elif item.status == 'completed' %}<span class='text-success'>{{item.status}}</span>{% elif item.status == 'canceled' %}<span class='text-danger'>{{item.status}}</span>{% endif %}</p>
+                            <p class="">Name: {{item.fname}} {{item.lname}} </p>
+                            <p class="">Message: {% if item.message %} " {{item.message}} " {% else %} ---{% endif %} </p>
+                            <p >Payment mode: {{item.payment_mode}}</p>
+                            <p>Tracking number: {{item.tracking_no}}</p>
+                            <p>Total Amount: Rs.{{item.total_price|stringformat:'d'}} /-</p>
+                            <p>You create this order {{item.created_at|timesince}} ago</p>
+                            <p>Date : {{item.created_at|date}} </p>
+
+                            <a href={% url 'view_order' item.id %} class="card-link">View order</a>
+                            {% if not item.status == 'canceled' and not item.status == 'completed' %}
+                                <a href={% url 'canceling_order' item.id %} class="card-link" >Cancel order ?</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class='text-end'>
+                <a href={% url 'order_history' %}>Order history</a>
+            </div>
+        </div>
+    {% else %}
+        <div style="min-height:100vh; display:grid;align-content:center;" class='text-center'>
+            <h1>No orders </h1>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Button trigger modal -->
+
+  
+  
+{% endblock content %}

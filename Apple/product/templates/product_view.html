@@ -13,25 +13,52 @@
     .container{
         min-height:100vh;
     }
+
 </style>
 {% include 'nav2.html' %}
 
 <section class='container'>
-    <div>
-        
-    </div>
-    <div class='row'>
-        <div class='col-sm-6 p-5' id='center'>
+    <div class='row p-5 product_data'>
+        <div class='col-sm-6 my-3' id='center'>
             {% if products %}
                 {% for item in products %}
-                
-                <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
-                    <img src={{item.product_image1.url}} class='d-block w-100' />
-                </div>
+                    <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">                        
+                        <div id="carouselExampleFade" class="carousel slide carousel-fade " data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                {% if item.product_image1 %}
+                                    <img src={{item.product_image1.url}} class="d-block w-100" alt="...">
+                                {% else %}
+                                    <img src={% static 'images/noimages.png' %} class='d-block w-100' />
+                                {% endif %}
+                              </div>
+                            <div class="carousel-item">
+                                {% if item.product_image2 %}
+                                    <img src={{item.product_image2.url}} class="d-block w-100" alt="...">
+                                {% else %}
+                                    <img src={% static 'images/noimages.png' %} class='d-block w-100' />
+                                {% endif %}                              </div>
+                            <div class="carousel-item">
+                                {% if item.product_image3 %}
+                                    <img src={{item.product_image3.url}} class="d-block w-100" alt="...">
+                                {% else %}
+                                    <img src={% static 'images/noimages.png' %} class='d-block w-100' />
+                                {% endif %}                              </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                          </div>
+                    </div>
                 {% endfor %}
             {% endif %}
         </div>
-        <div class='col-sm-6 p-5'>
+        <div class='col-sm-6 ' >
             {% if products %}
                 {% for item in products %}
                 <div class='text-center'>
@@ -40,7 +67,7 @@
                     <h3> <i class="fa-solid fa-indian-rupee-sign"></i> <span class='text-success'>{{item.offer_price|stringformat:'d'}}/- </span> <small class='text-secondary'><strike>{{item.original_price|stringformat:'d'}}/-</strike></small> <small class='text-white rounded bg-danger fw-3 shadow p-1 d-block w-100 text-center my-3'> {{offer_per|stringformat:'d'}}% off</small>
                     </h3>
                 </div>
-                <div>
+                <div class=''>
                     <h3>Features</h3>
                     <hr>
                     <p>{{item.description}}</p>
@@ -56,10 +83,26 @@
                     {% endif %}
                     <h5>Qunatity:</h5>
                     <select class="form-select prod_qty" aria-label="Default select example" style="width:150px;">
+                        {% if item.quantity == 1 %}
+                        <option selected >1</option>
+                        {% elif item.quantity == 2 %}
+                        <option selected >1</option>
+                        <option >2</option>
+                        {% elif item.quantity == 3 %}
+                        <option selected >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        {% elif item.quantity == 4 %}
                         <option selected >1</option>
                         <option >2</option>
                         <option >3</option>
                         <option >4</option>
+                        {% else %}
+                        <option selected >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        {% endif %}
                     </select>
                     {% csrf_token %}
                     <input type='hidden' value={{item.id}} class='prod_id' />
@@ -77,7 +120,11 @@
                                     <button class='mx-3 cart_btn mb-3'  id='cartbtn' >Cart <i class="fa-solid fa-cart-shopping fa-fade" style="color: #f9cb24;"></i></button>
                                 {% endif %}
                             {% endif %}
-                            <button  id='cartbtn' class='whish_btn'>  WishList <i class="fa-sharp fa-solid fa-heart fa-fade" style="color: #ff0026;"></i></button>
+                            {% if sameitem %}
+                                <a href={% url 'wishlist_show' %} id='cartbtn' title='go to  Wishlist' style='text-decoration:none;color:black;'>Go to wishlist <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
+                            {% else %}
+                                <button  id='cartbtn' title='click to add wishlist' class='whish_btn'><i class="fa-regular fa-heart" style="color: #ff0000;"></i></button>
+                            {% endif %}
                         </form>
                     </div>
                     <div class='text-end '>
@@ -88,5 +135,10 @@
             {% endif %}
         </div>
     </div>
+    
 </section>
+<script>
+   
+</script>
+
 {% endblock content %}
