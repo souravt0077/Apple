@@ -18,7 +18,7 @@ def place_order(request):
 
         if not Profile.objects.filter(user=request.user): # creating a new profile if it is not exist
             user_profile = Profile()
-            user_profile.user = request.user.username
+            user_profile.user = request.user
             user_profile.fname = request.POST.get('fname')
             user_profile.email = request.POST.get('email')
             user_profile.city = request.POST.get('city')
@@ -37,7 +37,7 @@ def place_order(request):
         new_order.fname = request.POST.get('fname')
         new_order.email = request.POST.get('email')
         new_order.city = request.POST.get('city')
-        new_order.city = request.POST.get('state')
+        new_order.state = request.POST.get('state')
         new_order.pin_code = request.POST.get('pincode')
         new_order.lname = request.POST.get('lname')
         new_order.phone = request.POST.get('phone')

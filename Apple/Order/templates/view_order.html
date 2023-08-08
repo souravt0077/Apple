@@ -28,7 +28,7 @@
                             <div class='col-sm-4' id='center'>
                                 <h5>{{item.product.name}}</h5>
                                 <p>({{item.product.varient}})</p>
-                                <h6>Rs.<span class='text-success'>{{item.product.offer_price}}</span> <span class='text-secondary'><small><strike>{{item.product.original_price}}</strike></small></span>/- </h6>
+                                <h6>Rs.<span class='text-success'>{{item.product.offer_price|stringformat:'d'}}</span> <span class='text-secondary'><small><strike>{{item.product.original_price|stringformat:'d'}}</strike></small></span>/- </h6>
                             </div>
                             <div class='col-sm-4' id='center'>
                                 <input type='number' value={{item.quantity}} readonly class='form-control' />

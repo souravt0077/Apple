@@ -50,6 +50,13 @@
               {% endif %}
           </li>
         </ul>
+        <li class="nav-item" >
+          <div class="text-center">
+            <form method == 'GET' action={% url 'search' %}>
+              <input type='text' placeholder='Search here...' name="search" class='form-control me-5 ms-5 search' />
+            </form>
+          </div>
+        </li>
         <ul class="navbar-nav ms-auto  mb-2 mb-lg-0">
           <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,7 +66,6 @@
              
                 <li><a class="dropdown-item" href="#">About</a></li>
                 <li><a class="dropdown-item" href="#">Customer Care <i class="fa-solid fa-headset"></i></a></li>
-             
               
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Logout <i class="fa-solid fa-right-from-bracket" style="color: #ff0000;"></i></a></li>
@@ -70,3 +76,17 @@
       </div>
     </div>
   </nav>
+  <script>
+    $(document).ready(function () {
+      $('.search').focus(function (e) { 
+        e.preventDefault();
+        $(this).css("background-color","white");
+        $(this).css("color","black");
+        
+      });
+      $('.search').blur(function (e) { 
+        e.preventDefault();
+        $(this).css("background-color","white");
+      });
+    });
+  </script>

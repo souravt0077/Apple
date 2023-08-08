@@ -5,6 +5,7 @@ from cart.models import Cart
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from wishlist.models import Wishlist
+from django.db.models import Q
 
 @method_decorator(login_required(login_url='welcome'), name='dispatch')
 class Category_view(View):
@@ -23,8 +24,9 @@ class Product_view(View):
     def get(self,request,slug):
         categories=Category.objects.all() # for navbar
         products=Products.objects.filter(slug=slug)
+        
         for p in products:
-            value=100-(p.offer_price/p.original_price)*100
+            value=100-(p.offer_price/p.original_price)*100 #calculating discount percentage
         offer_per=value
 
         user_cart=Cart.objects.filter(user=request.user) # for change cart button to go to cart
@@ -58,3 +60,10 @@ def category_show(request):
     cart_items=cart.count()
     context={'categories':categories,'cart_items':cart_items,'cart':cart}
     return render(request,'category_show.html',context)
+
+class search_show(View):
+    def get(self,request):
+        search=str(request.GET.get('search'))
+        products= Products.objects.filter(Q(name__icontains=search) | Q(varient__icontains=search))
+        context={'products':products}
+        return render(request,'search.html',context)
