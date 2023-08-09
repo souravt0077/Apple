@@ -8,19 +8,26 @@
     a{
         text-decoration:none;
     }
+    .sample{
+        opacity: 0;
+    }
+    .sample.animate__animated{
+        opacity: 1;
+    }
 </style>
 
 
 <section class='container'>
     <div>
-        <h3>All orders</h3>
+        <h3 class="sample">All orders</h3>
     </div>
     {% if orders %}
         <div class='row '>
+           
             {% for item in orders %}
                 <div class='col-sm-4'>
-                    <div class="card mx-3 my-3 shadow" style="width: 20rem;">
-                        <div class="card-body ">
+                    <div class="card mx-3 my-3 shadow  d-block w-100" style="width: 20rem;">
+                        <div class="card-body">
                             <h5 class="card-title"></h5>
                             <h6 class="card-subtitle mb-2 text-body-secondary">{{forloop.counter}}</h6>
                             <p>Status: {% if item.status == 'pending' %}<span class='text-warning'>{{item.status}}</span> {% elif item.status == 'out for shipping' %}<span class='text-info'>{{item.status}}</span>{% elif item.status == 'completed' %}<span class='text-success'>{{item.status}}</span>{% elif item.status == 'canceled' %}<span class='text-danger'>{{item.status}}</span>{% endif %}</p>
@@ -40,17 +47,21 @@
                     </div>
                 </div>
             {% endfor %}
-            
         </div>
     {% else %}
         <div style="min-height:100vh; display:grid;align-content:center;" class='text-center'>
             <h1>No orders </h1>
         </div>
     {% endif %}
-
-    
-
-
 </section>
+
+<script>
+    $(document).ready(function () {
+        $('.sample').waypoint(function () {
+            $('.sample').addClass("animate__animated animate__bounceInUp")
+        },{offset : "50%"});
+    });
+</script>
+
 
 {% endblock content %}

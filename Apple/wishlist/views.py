@@ -35,14 +35,13 @@ def wishlist_show(request):
     cart=Cart.objects.filter(user=request.user)
 
     same_prod = False
-    for c in cart:
-        cart_p_id=c.product.id
-        for w in wishlist:
-            wish_p_id=w.product.id
-            if cart_p_id == wish_p_id:
+    for item in wishlist:
+        wish_prod=item.product.id
+        for ci in cart:
+            cart_prod = ci.product.id
+            if wish_prod == cart_prod:
                 same_prod = True
-
-
+    
     context={'wishlist':wishlist,'categories':categories,'same_prod':same_prod}
     return render(request,'wishlist.html',context)
 
