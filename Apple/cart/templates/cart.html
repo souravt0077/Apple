@@ -4,9 +4,9 @@
 
 {% block content %}
 <style>
-    img{
+    {% comment %} img{
         mix-blend-mode: multiply;
-    }
+    } {% endcomment %}
     #img_container:hover{
         transform: scale(1.2);
         transition: 1.5s;
@@ -44,7 +44,7 @@
             <div class='col-sm-12 item' >
                 <a href={% url 'delete_cart' item.id %} class='remove btn btn-sm btn-outline-dark p-2 my-2 ' style="display:none; width:100px">Remove <i class="fa-solid fa-trash"></i></a>
 
-                    <div class='row bg-light shadow my-3 p-3'>
+                    <div class='row shadow my-3 p-3'>
                         <div class='col-sm-3' style='display:grid;align-content:center'>
                             <a href={% url 'product_view' item.product.slug %} style="text-decoration:none;">  
                             <img src={{item.product.product_image1.url}} class='d-block w-100' />
@@ -95,7 +95,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{cart_items}} {% if cart_items > 1 %}products {% else %}Product {% endif %}on the Way to checkout</h1>
+          <h1 class="modal-title text-dark fs-5" id="exampleModalLabel">{{cart_items}} {% if cart_items > 1 %}products {% else %}Product {% endif %}on the Way to checkout</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -105,7 +105,7 @@
                     <div class='col-sm-4' style='display:grid;align-content:center'>
                         <img src={{item.product.product_image1.url}} class='d-block w-100 ' />
                     </div>
-                    <div class='col-sm-4' style='display:grid;align-content:center'>
+                    <div class='col-sm-4 text-dark' style='display:grid;align-content:center'>
                         <h5>{{item.product.name}} <small>({{item.product.varient}})</small> </h5>
                         <h6><i class="fa-solid fa-indian-rupee-sign"></i> <b class='text-success'>{{item.product.offer_price|stringformat:'d'}}</b> <small><strike class='text-secondary'>{{item.product.original_price|stringformat:'d'}}</strike></small> /-</h6>
                     </div>

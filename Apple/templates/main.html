@@ -40,33 +40,54 @@
                 position:fixed;
                 Z-index:100;
             }
+            
+            body {
+              font-family: Arial, sans-serif;
+              transition: background-color 0.3s, color 0.3s;
+              background-color: #ffffff; /* Light mode background */
+              color: #000000; /* Light mode text */
+            }
+            
+            body.dark-mode {
+                background-color: #000000; /* Dark mode background */
+                color: #ffffff; /* Dark mode text */
+            }
+            
+          
         </style>
     </head>
     <body>
+
         <div id='preloader'></div>
+
+
+
        {% block content %}{% endblock content %}
+
+
        <!-- sign out Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">sign out ?</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">sign out ?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4>Are you sure ?</h4>
+                <p>{{request.user.username}} Do you want to sign out ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No stay here</button>
+                <a type="button" class="btn btn-danger" href={% url 'logout' %}>Sign out anyway </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <h4>Are you sure ?</h4>
-          <p>{{request.user.username}} Do you want to sign out ?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No stay here</button>
-          <a type="button" class="btn btn-danger" href={% url 'logout' %}>Sign out anyway </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--modal end-->
+      <!--modal end-->
 
-
+      
+      <script src="script.js"></script>
        <!--preloader--> 
        <script>
         let loader=document.getElementById("preloader");
@@ -93,6 +114,34 @@
         <script src={% static 'js/wishlist.js' %}></script>
        <!--waypoint cdn-->
        <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js" integrity="sha512-ZKNVEa7gi0Dz4Rq9jXcySgcPiK+5f01CqW+ZoKLLKr9VMXuCsw3RjWiv8ZpIOa0hxO79np7Ec8DDWALM0bDOaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      
-      </body>
+       
+       <!--dark mode-->
+       <script>
+        const toggleButton = document.getElementById('darkModeToggle');
+
+        // Check for the user's preference in localStorage on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                toggleButton.innerText = "Light Mode";
+            } else {
+                toggleButton.innerText = "Dark Mode";
+            }
+        });
+
+        toggleButton.addEventListener('click', () => {
+            if (document.body.classList.contains('dark-mode')) {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'disabled');
+                toggleButton.innerText = "Dark Mode";
+            } else {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'enabled');
+                toggleButton.innerText = "Light Mode";
+            }
+        });
+
+
+       </script>
+    </body>
 </html>
