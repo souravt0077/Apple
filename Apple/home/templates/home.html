@@ -32,9 +32,9 @@
 <div class='container mt-3'>
     {% if messages %}
         {% for msg in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id='alert_box'>
             <strong>{{msg}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {% comment %} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> {% endcomment %}
         </div>        
         {% endfor %}
     {% endif %}
@@ -128,7 +128,17 @@
         </div>
     </div>
 </section>
+
+
 <!--custom.js-->
 <script src={% static 'js/custom_gsap.js' %}></script>
+
+<script>
+    let msg_alert = document.getElementById('alert_box')
+    setTimeout(()=>{
+        msg_alert.style.display = 'none';
+    },3000)
+
+</script>
 {% include 'footer.html' %}
 {% endblock content %}

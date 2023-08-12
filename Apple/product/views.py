@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from .models  import Category,Products
+from .models  import Category,Products,Likes
 from cart.models import Cart
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from wishlist.models import Wishlist
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 
 @method_decorator(login_required(login_url='welcome'), name='dispatch')
 class Category_view(View):
@@ -25,6 +28,7 @@ class Product_view(View):
         categories=Category.objects.all() # for navbar
         products=Products.objects.filter(slug=slug)
         
+        offer_per = 0
         for p in products:
             value=100-(p.offer_price/p.original_price)*100 #calculating discount percentage
         offer_per=value
@@ -51,7 +55,7 @@ class Product_view(View):
         cart_items=cart.count()
 
 
-        context={'products':products,'categories':categories,'offer_per':offer_per,'sameprod':sameprod,'cart':cart,'cart_items':cart_items,'sameitem':sameitem}
+        context={'products':products,'categories':categories,'sameprod':sameprod,'offer_per':offer_per,'cart':cart,'cart_items':cart_items,'sameitem':sameitem}
         return render(request,'product_view.html',context)
 
 def category_show(request):
@@ -67,3 +71,23 @@ class search_show(View):
         products= Products.objects.filter(Q(name__icontains=search) | Q(varient__icontains=search))
         context={'products':products}
         return render(request,'search.html',context)
+    
+def like(request,slug):
+    user = request.user
+    product = Products.objects.get(slug=slug)
+    current_likes = product.likes
+    liked = Likes.objects.filter(user=user,product=product).count()
+
+    if not liked:
+        liked = Likes.objects.create(
+            user=user,
+            product=product
+        )
+        current_likes += 1
+    else:
+        liked = Likes.objects.filter(user=user,product=product).delete()
+        current_likes -= 1
+
+    product.likes = current_likes
+    product.save()
+    return HttpResponseRedirect(reverse('product_view',args=[slug]))

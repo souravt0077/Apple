@@ -7,5 +7,8 @@ urlpatterns = [
     path('category_show/',views.category_show,name='category_show'),
 
     # search
-    path('search/',views.search_show.as_view(),name='search')
+    path('search/',views.search_show.as_view(),name='search'),
+
+    # like
+    path('like/<str:slug>/',views.like,name='Like'),
 ]

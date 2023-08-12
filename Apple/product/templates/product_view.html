@@ -81,6 +81,7 @@
                         <p class='text-danger'>Only {{item.quantity}} available. secure your order now</p>
                     </div>
                     {% endif %}
+                    
                     <h5>Qunatity:</h5>
                     <select class="form-select prod_qty" aria-label="Default select example" style="width:150px;">
                         {% if item.quantity == 1 %}
@@ -107,6 +108,9 @@
                     {% csrf_token %}
                     <input type='hidden' value={{item.id}} class='prod_id' />
                 </div>
+                <p>Do you like this product ? </p>
+                <a href={% url 'Like' item.slug %}><h2><i class="fa-regular fa-thumbs-up"></i></a></h2>
+                <p>{{item.likes}}</p>
                 <div class='row mt-5 '>
                     <div class='col-sm-12 text-center mb-3'>
                         

@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 
 class Category(models.Model):
     slug=models.SlugField()
@@ -32,9 +33,19 @@ class Products(models.Model):
     offer=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
     quantity=models.IntegerField(default='10')
+    likes=models.IntegerField(default=0)
 
     def __str__(self):
         return "{}-{}".format(self.name,self.varient)
     
     class Meta:
         ordering = ['-created']
+
+class Likes(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='user_likes')
+    product = models.ForeignKey(Products,on_delete=models.CASCADE,related_name='product_likes')
+    liked_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}-{}".format(self.product,self.user)
+    
