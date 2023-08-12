@@ -8,6 +8,7 @@ from wishlist.models import Wishlist
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 
 
 @method_decorator(login_required(login_url='welcome'), name='dispatch')
@@ -76,7 +77,7 @@ def like(request,slug):
     user = request.user
     product = Products.objects.get(slug=slug)
     current_likes = product.likes
-    liked = Likes.objects.filter(user=user,product=product).count()
+    liked = Likes.objects.filter(user=user,product=product)
 
     if not liked:
         liked = Likes.objects.create(
@@ -84,10 +85,19 @@ def like(request,slug):
             product=product
         )
         current_likes += 1
+        messages.success(request,'Product Liked')
     else:
         liked = Likes.objects.filter(user=user,product=product).delete()
         current_likes -= 1
+        messages.success(request,'Product Unliked')
 
     product.likes = current_likes
     product.save()
     return HttpResponseRedirect(reverse('product_view',args=[slug]))
+
+def liked_products_show(request):
+    categories=Category.objects.all() # for navbar
+    liked = Likes.objects.filter(user=request.user)
+
+    context={'liked':liked,'categories':categories}
+    return render(request,'liked_products.html',context)

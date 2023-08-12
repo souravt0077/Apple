@@ -5,6 +5,8 @@ from product.models import Products
 from .models import Wishlist
 from product.models import Category
 from cart.models import Cart
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 # from django.db.models import Q
 
 def add_to_wishlist(request):
@@ -45,8 +47,15 @@ def wishlist_show(request):
     context={'wishlist':wishlist,'categories':categories,'same_prod':same_prod}
     return render(request,'wishlist.html',context)
 
-def remove_wishlist(request,pk):
-    wishlist=Wishlist.objects.filter(user=request.user).filter(id=pk).first()
+# def remove_wishlist(request,pk):
+#     wishlist=Wishlist.objects.filter(user=request.user).filter(id=pk).first()
+#     wishlist.delete()
+#     messages.success(request,'{} ({}) removed from wishlist'.format(wishlist.product.name,wishlist.product.varient))
+#     return redirect('wishlist_show')
+
+def remove_wishlist(request,slug):
+    product = Products.objects.get(slug=slug)
+    wishlist=Wishlist.objects.filter(user=request.user).filter(product=product)
     wishlist.delete()
-    messages.success(request,'{} ({}) removed from wishlist'.format(wishlist.product.name,wishlist.product.varient))
-    return redirect('wishlist_show')
+    messages.success(request,'{} ({}) removed from wishlist'.format(product.name,product.varient))
+    return HttpResponseRedirect(reverse('product_view',args=[slug]))

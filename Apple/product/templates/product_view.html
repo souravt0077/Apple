@@ -18,6 +18,18 @@
 {% include 'nav2.html' %}
 
 <section class='container'>
+
+    <div class='mt-2'>
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id='alert_box'>
+                <strong>{{msg}}</strong>
+                {% comment %} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> {% endcomment %}
+            </div>        
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <div class='row p-5 product_data'>
         <div class='col-sm-6 my-3' id='center'>
             {% if products %}
@@ -125,7 +137,7 @@
                                 {% endif %}
                             {% endif %}
                             {% if sameitem %}
-                                <a href={% url 'wishlist_show' %} id='cartbtn' title='go to  Wishlist' style='text-decoration:none;color:black;'>Go to wishlist <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
+                                <a href={% url 'remove_wishlist' item.slug %} id='cartbtn' title='go to  Wishlist' style='text-decoration:none;color:black;'> <i class="fa-solid fa-heart fa-bounce" style="color: #ff0000;"></i></a>
                             {% else %}
                                 <button  id='cartbtn' title='click to add wishlist' class='whish_btn'><i class="fa-regular fa-heart" style="color: #ff0000;"></i></button>
                             {% endif %}
@@ -142,7 +154,11 @@
     
 </section>
 <script>
-   
+    let msg_alert = document.getElementById('alert_box')
+    setTimeout(()=>{
+        msg_alert.style.display = 'none';
+    },3000)
+
 </script>
 
 {% endblock content %}

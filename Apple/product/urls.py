@@ -11,4 +11,5 @@ urlpatterns = [
 
     # like
     path('like/<str:slug>/',views.like,name='Like'),
+    path('liked_products/',views.liked_products_show,name='Liked_products'),
 ]

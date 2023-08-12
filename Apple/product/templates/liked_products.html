@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block title %}Liked products{% endblock title %}
+
+{% block content %}
+<style>
+    img{
+        mix-blend-mode: multiply;
+    }
+</style>
+
+{% include 'nav2.html' %}
+
+<section style='min-height:100vh;' class='container'>
+
+    {% if liked %}
+        <div class='row '>
+            {% for item in liked %}
+                <div class='col-sm-4 my-5'>
+                    <a href={% url 'product_view' item.product.slug %} style='text-decoration:none;color:black;'>
+                        <div class=" mb-3 d-block w-100 p-5" style="width: 18rem;">
+                            <img src={{item.product.product_image1.url}} class="card-img-top d-block w-100" alt="..." id='img_container'>
+                            <div class="card-body">
+                            <h5 class="card-title text-center">{{item.product.name}} <small>({{item.product.varient}})</small></h5>
+                            {% comment %} <p class="card-text">{{item.small_description}}</p> {% endcomment %}
+                            </div>
+                        </div>  
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
+
+{% include 'footer.html' %}
+{% endblock content %}
