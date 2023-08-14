@@ -3,6 +3,11 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Bungee+Spice&family=Luckiest+Guy&family=Oswald&family=Pacifico&family=Press+Start+2P&family=Tilt+Prism&display=swap" rel="stylesheet">
 {% include 'nav.html' %}
 <style>
     #applehome{
@@ -27,6 +32,17 @@
         background-attachment: fixed;
         background-size: cover;    }
      {% endcomment %}
+     #head{
+        {% comment %} font-family: 'Bangers', cursive; {% endcomment %}
+        {% comment %} font-family: 'Bebas Neue', sans-serif; {% endcomment %}
+        {% comment %} font-family: 'Bungee Spice', cursive; {% endcomment %}
+        {% comment %} font-family: 'Luckiest Guy', cursive; {% endcomment %}
+        {% comment %} font-family: 'Oswald', sans-serif; {% endcomment %}
+        {% comment %} font-family: 'Pacifico', cursive; {% endcomment %}
+        font-family: 'Press Start 2P', cursive;
+        
+     }
+ 
 </style>
 <!--message-->
 <div class='container mt-3'>
@@ -44,9 +60,10 @@
 <section id='applehome'>
     <div class='text-center'  >
         {% comment %} <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft " > {% endcomment %}
-                <img src={% static 'images/apple.png' %} id='img_container' />
-            <h6 > <mark class='p-2 rounded'>All brand new I phones</mark> </h6>
+                {% comment %} <img src={% static 'images/apple.png' %} id='img_container' />
+            <h6 > <mark class='p-2 rounded'>All brand new I phones</mark> </h6> {% endcomment %}
         {% comment %} </div> {% endcomment %}
+        <h1 id='head'>Store. The best way to buy the products you love.</h1>
     </div>
 </section>
 {% include 'nav2.html' %}
@@ -55,7 +72,7 @@
     <div class='text-center ' >
         <img src={% static 'images/phones.jpg' %} class='d-block w-100' id='img' />
         <div  class='p-2 bg-light'>
-            <h1>I Phone 14 Series </h1>
+            <h1 id='head'>I Phone 14 Series </h1>
         </div>
         
         <img src={% static 'images/phones2.jpg' %} class='d-block w-100' id='img'  />
@@ -72,7 +89,7 @@
 
     <div class='text-center'>
         <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
-            <h1>Product Categories</h1>
+            <h3 id='head'>Product Categories</h3>
         </div>
         <hr>
         <br>
@@ -98,9 +115,30 @@
         </div>
     </div>
 </section>
+<section id='applehome' class=''>
+    <div class='p-5'>
+        <h1 class='text-center' id='head'> I Phone 14</h1>
+    </div>
+    {% comment %} <div class='p-5 featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop'> {% endcomment %}
+        <div class='text-center'>
+            <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop m-5">
+                <img src={% static 'images/14png.png' %} class='d-block w-100' id='img'/>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class='text-center'>
+            <img src={% static 'images/iphone3.gif' %} class='d-block w-100' id='img' />
+        </div>
+        {% comment %} <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop "> {% endcomment %}
+            <img src={% static 'images/iphone143.jpeg' %} class='d-block w-100' id='img' />
+        {% comment %} </div> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+</section>
 <section id='applehome' class='p-5'>
     <div class='p-5'>
-        <h1 class='text-center'>Brand New I Phone SE</h1>
+        <h1 class='text-center' id='head'>Brand New I Phone SE</h1>
     </div>
     <br>
     <div class='p-5 featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop'>
@@ -115,19 +153,9 @@
     </div>
 </section>
 
-<section id='applehome' >
-    <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop ">
-        <img src={% static 'images/iphone143.jpeg' %} class='d-block w-100' id='img' />
-    </div>
 
-</section>
-<section id='applehome'>
-    <div class='text-center'>
-        <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromTop m-5">
-            <img src={% static 'images/14png.png' %} class='d-block w-100' id='img'/>
-        </div>
-    </div>
-</section>
+
+
 
 
 <!--custom.js-->

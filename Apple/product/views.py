@@ -55,8 +55,18 @@ class Product_view(View):
         cart=Cart.objects.filter(user=request.user)
         cart_items=cart.count()
 
+        # like btn change
+        product=Products.objects.get(slug=slug)
+        like = Likes.objects.filter(user=request.user,product=product)
+        total_likes = Likes.objects.filter(product=product).count()
+        total_likes -=1
 
-        context={'products':products,'categories':categories,'sameprod':sameprod,'offer_per':offer_per,'cart':cart,'cart_items':cart_items,'sameitem':sameitem}
+        if like:
+            like_icon = True
+        else:
+            like_icon = False
+
+        context={'products':products,'categories':categories,'sameprod':sameprod,'offer_per':offer_per,'cart':cart,'cart_items':cart_items,'sameitem':sameitem,'like_icon':like_icon,'total_likes':total_likes}
         return render(request,'product_view.html',context)
 
 def category_show(request):

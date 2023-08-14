@@ -7,11 +7,14 @@
     img{
         mix-blend-mode: multiply;
     }
+    #sec{
+        min-height:100vh;
+    }
 </style>
 
 {% include 'nav2.html' %}
 
-<section style='min-height:100vh;' class='container'>
+<section id='sec' class='container'>
 
     {% if liked %}
         <div class='row '>
@@ -29,6 +32,12 @@
                 </div>
             {% endfor %}
         </div>
+    {% else %}
+    <section id='sec' style="display:grid;align-content:center;">
+        <div class='text-center' >
+            <h1>No Product Found ! </h1>
+        </div>
+    </section>
     {% endif %}
 </section>
 
